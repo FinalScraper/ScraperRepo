@@ -7,9 +7,10 @@ from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelReque
     GetFullChannelRequest
 from telethon.tl.types import UserStatusOnline, UserStatusRecently
 from time import sleep
+import os
 
 # initial variables
-PATH = 'C:\\Users\\Guy Buky\\Desktop\\4.0\\Group1.py'
+PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
 scrape_link = 't.me/ShovDani'
 target_link = 't.me/momon44'
 start_date = datetime(2020, 10, 23, 1, 1, 1, tzinfo = timezone.utc)
