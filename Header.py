@@ -27,15 +27,15 @@ class Sim:
 
 def CreateSimList():  # opens the file and retrieve each sim as an object
     cards = []
-    file = open(PATH, 'r')
-    for line in file.readlines():
-        sim_id, acc_hash, phone_number, sim_name = line.split(',')
-        sim_name = str(sim_name).replace("\n", "")  # remove new line from names
-        s = Sim(int(sim_id), acc_hash, phone_number, sim_name)
-        cards.append(s)
-    file.close()
+    f = open(CARDS_PATH, 'r')
+    for line in f.readlines():
+        if len(line) != 1:
+            sim_id, acc_hash, phone_number, sim_name = line.split(',')
+            sim_name = str(sim_name).replace("\n", "")  # remove newline from names
+            s = Sim(int(sim_id), acc_hash, phone_number, sim_name)
+            cards.append(s)
+    f.close()
     return cards
-
 
 def CloseSimList(cards: list):  # writes the sim objects to the flie (minus the bans)
     file = open(PATH, 'w')
