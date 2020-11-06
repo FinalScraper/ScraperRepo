@@ -8,7 +8,6 @@ from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelReque
 from telethon.tl.types import UserStatusOnline, UserStatusRecently
 from time import sleep
 import os
-import glob
 
 # initial variables
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
@@ -59,8 +58,7 @@ def DeleteRow(phone: str):
     for sim in lst:
         if sim.phone == phone:
             lst.remove(sim)
-            file = glob.glob(f"{phone}.session")
-            os.remove(file[0])
+            os.remove(f"{phone}.session")
     CloseSimList(lst)
 
 
