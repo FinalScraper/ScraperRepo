@@ -9,13 +9,13 @@ from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.types import PeerChannel
 from telethon.errors.common import MultiError
-from Header import Init, DeleteRow, isFull, JoinOrLeave
+from Header import Init, DeleteRow, isFull, JoinGroup, LeaveGroup
 
 option = bool(input("Add cards to target group? (1/0): "))
 if option:
-    JoinOrLeave(True)
+    JoinGroup()
     time.sleep(10)
-    print(Fore.BLUE + "\033[1m" + "\n\nSim cards are in the target group! starting FinalScraper...")
+    print(Fore.BLUE + "\033[1m" + "\nSim cards are in the target group! starting FinalScraper...")
 
 # Final Scraper #
 cards, participants, TARGET_ID = Init()
@@ -59,7 +59,7 @@ for j in range(60):
                     print(Fore.BLUE + "TARGET GROUP IS FULL! PULLING OUT SIM CARDS..")
                     client.disconnect()
                     del client
-                    JoinOrLeave(False)
+                    LeaveGroup()
                     exit(1)
                 client.disconnect()
                 del client

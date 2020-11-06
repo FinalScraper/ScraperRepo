@@ -1,4 +1,8 @@
-from Header import JoinOrLeave
+from Header import JoinGroup, LeaveGroup
 
 if __name__ == '__main__':
-    JoinOrLeave(int(input('\033[1m' + 'choose 1 for join or 2 for leave: ')))
+    option = bool(input("Press 1 to join or 0 to leave: "))
+    if option:
+        JoinGroup()
+    else:
+        LeaveGroup()

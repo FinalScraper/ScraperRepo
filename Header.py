@@ -78,7 +78,7 @@ def ClientConnect(sim: Sim):
     del client
 
 
-def JoinOrLeave(option: bool):
+def JoinGroup():
     cards = CreateSimList()
     i = 0
     print(f"Number of sim cards before: {len(cards)}")
@@ -87,13 +87,8 @@ def JoinOrLeave(option: bool):
             sim = cards[i]
             client = TelegramClient(sim.phone, sim.ID, sim.access_hash)
             client.connect()
-
-            if option:
-                client(JoinChannelRequest(client.get_entity(target_link)))
-                print(Fore.GREEN + f"{sim.name} Has Joined!")
-            else:
-                client(LeaveChannelRequest(client.get_entity(target_link)))
-                print(Fore.GREEN + f"{sim.name} Has Left!")
+            client(JoinChannelRequest(client.get_entity(target_link)))
+            print(Fore.GREEN + f"{sim.name} Has Joined!")
             i += 1
 
         except (PhoneNumberBannedError, UserBannedInChannelError, UserDeactivatedBanError) as ex:
@@ -109,7 +104,36 @@ def JoinOrLeave(option: bool):
             del client
 
     print(f"Number of sim cards after: {len(cards)}")
-    CloseSimList(cards)  # clean the bans and close the file
+    CloseSimList(cards)
+
+
+def LeaveGroup():
+    cards = CreateSimList()
+    i = 0
+    print(f"Number of sim cards before: {len(cards)}")
+    while i < len(cards):
+        try:
+            sim = cards[i]
+            client = TelegramClient(sim.phone, sim.ID, sim.access_hash)
+            client.connect()
+            client(LeaveChannelRequest(client.get_entity(target_link)))
+            print(Fore.GREEN + f"{sim.name} Has Left!")
+            i += 1
+
+        except (PhoneNumberBannedError, UserBannedInChannelError, UserDeactivatedBanError) as ex:
+            print(Fore.BLACK + f"SIM {sim.name} GOT {type(ex).__name__}!")
+            cards.remove(sim)
+
+        except UserNotParticipantError:
+            i += 1
+
+        finally:
+            sleep(2)
+            client.disconnect()
+            del client
+
+    print(f"Number of sim cards after: {len(cards)}")
+    CloseSimList(cards)
 
 
 def Init():
