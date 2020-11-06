@@ -17,13 +17,12 @@ if option:
     time.sleep(10)
     print(Fore.BLUE + "\033[1m" + "\n\nSim cards are in the target group! starting FinalScraper...")
 
-
 # Final Scraper #
 cards, participants, TARGET_ID = Init()
 i = 0
 fe_count = 0
 ban_count = 0
-logging.basicConfig(filename = 'FinalScraper.log', filemode = 'w', level = logging.DEBUG)
+logging.basicConfig(filename='FinalScraper.log', filemode='w', level=logging.DEBUG)
 
 for j in range(60):
     for sim in cards:

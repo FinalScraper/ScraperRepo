@@ -3,18 +3,19 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError, UserBannedInCh
 from datetime import datetime, timezone
 from telethon.sync import TelegramClient
 from colorama import Fore
-from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelRequest, GetParticipantRequest, \
+from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelRequest, \
     GetFullChannelRequest
 from telethon.tl.types import UserStatusOnline, UserStatusRecently
 from time import sleep
 import os
+import glob
 
 # initial variables
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
-scrape_link = 't.me/ShovDani'
-target_link = 't.me/momon44'
-start_date = datetime(2020, 10, 23, 1, 1, 1, tzinfo = timezone.utc)
-end_date = datetime(2020, 11, 25, 1, 1, 1, tzinfo = timezone.utc)
+scrape_link = 't.me/Tellegram420cali'
+target_link = 't.me/gramoni'
+start_date = datetime(2020, 11, 1, 1, 1, 1, tzinfo=timezone.utc)
+end_date = datetime(2020, 11, 25, 1, 1, 1, tzinfo=timezone.utc)
 
 
 class Sim:
@@ -27,7 +28,7 @@ class Sim:
 
 def CreateSimList():  # opens the file and retrieve each sim as an object
     cards = []
-    f = open(CARDS_PATH, 'r')
+    f = open(PATH, 'r')
     for line in f.readlines():
         if len(line) != 1:
             sim_id, acc_hash, phone_number, sim_name = line.split(',')
@@ -36,6 +37,7 @@ def CreateSimList():  # opens the file and retrieve each sim as an object
             cards.append(s)
     f.close()
     return cards
+
 
 def CloseSimList(cards: list):  # writes the sim objects to the flie (minus the bans)
     file = open(PATH, 'w')
@@ -48,14 +50,6 @@ def CloseSimList(cards: list):  # writes the sim objects to the flie (minus the 
     file.close()
 
 
-def NotMutual(c, user, group):
-    try:
-        c(GetParticipantRequest(channel = group, user_id = user))
-        return False
-    except UserNotParticipantError:
-        return True
-
-
 def isFull(c, group):
     return c(GetFullChannelRequest(group)).full_chat.participants_count >= 5300
 
@@ -65,6 +59,8 @@ def DeleteRow(phone: str):
     for sim in lst:
         if sim.phone == phone:
             lst.remove(sim)
+            file = glob.glob(f"{phone}.session")
+            os.remove(file[0])
     CloseSimList(lst)
 
 
@@ -132,8 +128,8 @@ def Init():
     target_id = target_group_entity.id
 
     print("Scraping group lists..")
-    scrape_participants = first_client.get_participants(scrape_group, aggressive = True)
-    target_participants = first_client.get_participants(target_group_entity, aggressive = True)
+    scrape_participants = first_client.get_participants(scrape_group, aggressive=True)
+    target_participants = first_client.get_participants(target_group_entity, aggressive=True)
 
     filtered_participants = []
     final_participants = []
