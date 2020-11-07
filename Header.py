@@ -1,6 +1,6 @@
 from telethon.errors.rpcerrorlist import UserNotParticipantError, UserBannedInChannelError, PhoneNumberBannedError, \
     UserDeactivatedBanError
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
 from telethon.sync import TelegramClient
 from colorama import Fore
 from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelRequest, \
@@ -13,9 +13,8 @@ import os
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
 scrape_link = 't.me/fifapol1'
 target_link = 't.me/davig12'
+DAYS_TO_FILTER = 7
 TOTAL_SLEEP_TIME = 10
-start_date = datetime(2020, 11, 1, 1, 1, 1, tzinfo = timezone.utc)
-end_date = datetime(2020, 11, 25, 1, 1, 1, tzinfo = timezone.utc)
 
 
 class Sim:
@@ -165,7 +164,7 @@ def Init():
     for user in scrape_participants:
         if user.username is not None and not user.bot:  # if has a username and not a bot
             if not user.deleted:  # if it isn't a deleted account
-                if hasattr(user.status, 'was_online') and start_date < user.status.was_online < end_date:
+                if hasattr(user.status, 'was_online') and datetime.now() - timedelta(days = DAYS_TO_FILTER) < user.status.was_online < datetime.now():
                     filtered_participants.append(user)
                 elif type(user.status) == UserStatusOnline or type(user.status) == UserStatusRecently:
                     filtered_participants.append(user)
