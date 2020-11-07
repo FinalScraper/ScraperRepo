@@ -32,11 +32,11 @@ for j in range(60):
 
         except (PhoneNumberBannedError, UserBannedInChannelError, UserDeactivatedBanError) as e:
             print(Fore.BLUE + f"SIM {sim.name} GOT {type(e).__name__}! Deleting..")
-            DeleteRow(sim.phone)
             cards.remove(sim)
             ban_count += 1
             client.disconnect()
             del client
+            DeleteRow(sim.phone)
             continue
 
         except (ConnectionError, RpcCallFailError):
@@ -81,11 +81,11 @@ for j in range(60):
 
             except (UserDeactivatedBanError, PhoneNumberBannedError, UserBannedInChannelError) as ex:
                 print(Fore.BLACK + f"SIM {sim.name} GOT {type(ex).__name__}!")
-                DeleteRow(sim.phone)
                 cards.remove(sim)
                 ban_count += 1
                 client.disconnect()
                 del client
+                DeleteRow(sim.phone)
                 break
 
             except MultiError:

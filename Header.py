@@ -11,11 +11,11 @@ import os
 
 # initial variables
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
-scrape_link = 't.me/l_lgilizzia'
+scrape_link = 't.me/fifapol1'
 target_link = 't.me/davig12'
 TOTAL_SLEEP_TIME = 10
-start_date = datetime(2020, 11, 1, 1, 1, 1, tzinfo=timezone.utc)
-end_date = datetime(2020, 11, 25, 1, 1, 1, tzinfo=timezone.utc)
+start_date = datetime(2020, 11, 1, 1, 1, 1, tzinfo = timezone.utc)
+end_date = datetime(2020, 11, 25, 1, 1, 1, tzinfo = timezone.utc)
 
 
 class Sim:
@@ -59,7 +59,10 @@ def DeleteRow(phone: str):
     for sim in lst:
         if sim.phone == phone:
             lst.remove(sim)
-            os.remove(f"{phone}.session")
+            try:
+                os.remove(f"{phone}.session")
+            except PermissionError:
+                pass
     CloseSimList(lst)
 
 
@@ -151,8 +154,8 @@ def Init():
     target_id = target_group_entity.id
 
     print("Scraping group lists..")
-    scrape_participants = first_client.get_participants(scrape_group, aggressive=True)
-    target_participants = first_client.get_participants(target_group_entity, aggressive=True)
+    scrape_participants = first_client.get_participants(scrape_group, aggressive = True)
+    target_participants = first_client.get_participants(target_group_entity, aggressive = True)
 
     filtered_participants = []
     final_participants = []
