@@ -75,6 +75,7 @@ for j in range(60):
                 cards.remove(sim)
                 fe_count += 1
                 i += 1
+                time.sleep(TOTAL_SLEEP_TIME / 2)
                 break
 
             except (ValueError, UserPrivacyRestrictedError, UserChannelsTooMuchError, UserAlreadyParticipantError,
@@ -89,6 +90,7 @@ for j in range(60):
                 client.disconnect()
                 del client
                 DeleteRow(sim.phone)
+                time.sleep(TOTAL_SLEEP_TIME / 2)
                 break
 
             except MultiError:
