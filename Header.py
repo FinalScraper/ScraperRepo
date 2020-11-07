@@ -61,6 +61,7 @@ def DeleteRow(phone: str):
             lst.remove(sim)
             try:
                 os.remove(f"{phone}.session")
+                print("Session file Deleted!")
             except PermissionError:
                 pass
     CloseSimList(lst)
