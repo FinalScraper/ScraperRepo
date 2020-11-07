@@ -1,6 +1,5 @@
 import time
 import traceback
-import logging
 from colorama import Fore
 from telethon.errors.rpcerrorlist import PeerFloodError, UserPrivacyRestrictedError, UserNotMutualContactError, \
     UserChannelsTooMuchError, UserKickedError, FloodWaitError, UserAlreadyParticipantError, ChannelPrivateError, \
@@ -9,9 +8,9 @@ from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.types import PeerChannel
 from telethon.errors.common import MultiError
-from Header import Init, DeleteRow, isFull, JoinGroup, LeaveGroup
+from Header import Init, DeleteRow, isFull, JoinGroup, LeaveGroup, TOTAL_SLEEP_TIME
 
-option = bool(input("Add cards to target group? (1/0): "))
+option = int(input("Add cards to target group? (1/0): "))
 if option:
     JoinGroup()
     time.sleep(10)
@@ -22,7 +21,6 @@ cards, participants, TARGET_ID = Init()
 i = 0
 fe_count = 0
 ban_count = 0
-logging.basicConfig(filename='FinalScraper.log', filemode='w', level=logging.DEBUG)
 
 for j in range(60):
     for sim in cards:
@@ -30,14 +28,15 @@ for j in range(60):
             client = TelegramClient(sim.phone, sim.ID, sim.name)
             client.connect()
             print(Fore.MAGENTA + f"Connected to {sim.name}")
-            time.sleep(5)
+            time.sleep(TOTAL_SLEEP_TIME / 2)
 
         except (PhoneNumberBannedError, UserBannedInChannelError, UserDeactivatedBanError) as e:
             print(Fore.BLUE + f"SIM {sim.name} GOT {type(e).__name__}! Deleting..")
+            DeleteRow(sim.phone)
+            cards.remove(sim)
+            ban_count += 1
             client.disconnect()
             del client
-            cards.remove(sim)
-            time.sleep(2)
             continue
 
         except (ConnectionError, RpcCallFailError):
@@ -47,14 +46,14 @@ for j in range(60):
         # keeping count how many left
         print(Fore.GREEN + "The amount of users left is: {}".format(len(participants) - i))
 
-        # use every sim add 1 user and go to the next
+        # for every sim add 1 user and go to the next
         while True:
             try:
                 target_group = client.get_input_entity(PeerChannel(int(TARGET_ID)))  # the group to add to
                 user_to_add = client.get_input_entity(participants[i].username)  # the user to add
                 client(InviteToChannelRequest(target_group, [user_to_add]))
                 print(Fore.GREEN + "Added member {} from sim {}".format(participants[i].id, sim.name))
-                time.sleep(5)
+                time.sleep(TOTAL_SLEEP_TIME / 2)
                 if isFull(client, target_group):
                     print(Fore.BLUE + "TARGET GROUP IS FULL! PULLING OUT SIM CARDS..")
                     client.disconnect()
@@ -82,9 +81,8 @@ for j in range(60):
 
             except (UserDeactivatedBanError, PhoneNumberBannedError, UserBannedInChannelError) as ex:
                 print(Fore.BLACK + f"SIM {sim.name} GOT {type(ex).__name__}!")
-                DeleteRow(sim)
+                DeleteRow(sim.phone)
                 cards.remove(sim)
-                time.sleep(2)
                 ban_count += 1
                 client.disconnect()
                 del client
@@ -111,4 +109,4 @@ for j in range(60):
 
     print(Fore.YELLOW + "LOOP NUMBER {}. Sim cards left: {}\n"
                         "Flood Errors: {}. Bans: {}".format(j + 1, len(cards), fe_count, ban_count))
-    time.sleep(10)
+    time.sleep(TOTAL_SLEEP_TIME)

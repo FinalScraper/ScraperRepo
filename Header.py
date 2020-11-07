@@ -11,8 +11,9 @@ import os
 
 # initial variables
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
-scrape_link = 't.me/Tellegram420cali'
-target_link = 't.me/gramoni'
+scrape_link = 't.me/l_lgilizzia'
+target_link = 't.me/davig12'
+TOTAL_SLEEP_TIME = 10
 start_date = datetime(2020, 11, 1, 1, 1, 1, tzinfo=timezone.utc)
 end_date = datetime(2020, 11, 25, 1, 1, 1, tzinfo=timezone.utc)
 
