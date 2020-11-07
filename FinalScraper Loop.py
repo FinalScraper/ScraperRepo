@@ -24,6 +24,9 @@ ban_count = 0
 
 for j in range(60):
     for sim in cards:
+        if len(cards) < 20:
+            print("NOT ENOUGH SIM CARDS! EXITING..")
+            exit(1)
         try:
             client = TelegramClient(sim.phone, sim.ID, sim.name)
             client.connect()
