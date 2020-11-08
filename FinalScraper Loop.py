@@ -18,13 +18,11 @@ if option:
 
 # Final Scraper #
 cards, participants, TARGET_ID = Init()
-i = 0
-fe_count = 0
-ban_count = 0
+i, fe_count, ban_count = 0, 0, 0
 
 for j in range(60):
     for sim in cards:
-        if len(cards) < 20:
+        if len(cards) < 10:
             print("NOT ENOUGH SIM CARDS! EXITING..")
             exit(1)
         try:
@@ -62,7 +60,7 @@ for j in range(60):
                     client.disconnect()
                     del client
                     LeaveGroup()
-                    exit(1)
+                    exit(0)
                 client.disconnect()
                 del client
                 i += 1

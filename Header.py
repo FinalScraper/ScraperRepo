@@ -12,7 +12,7 @@ import os
 
 # initial variables
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
-scrape_link = 't.me/fifapol1'
+scrape_link = 't.me/weedham0'
 target_link = 't.me/davig12'
 DAYS_TO_FILTER = 7
 TOTAL_SLEEP_TIME = 10
@@ -26,7 +26,7 @@ class Sim:
         self.name = name
 
 
-def CreateSimList():  # opens the file and retrieve each sim as an object
+def CreateSimList():  # converts a group file to a sim object list
     cards = []
     f = open(PATH, 'r')
     for line in f.readlines():
@@ -39,7 +39,7 @@ def CreateSimList():  # opens the file and retrieve each sim as an object
     return cards
 
 
-def CloseSimList(cards: list):  # writes the sim objects to the flie (minus the bans)
+def CloseSimList(cards: list):  # writes a list of sim objects to file
     file = open(PATH, 'w')
     for j in range(len(cards)):
         s = cards[j]
