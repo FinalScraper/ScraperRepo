@@ -7,6 +7,7 @@ from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelReque
     GetFullChannelRequest
 from telethon.tl.types import UserStatusOnline, UserStatusRecently
 from time import sleep
+import pytz
 import os
 
 # initial variables
@@ -161,10 +162,13 @@ def Init():
     final_participants = []
 
     print("Filtering From Groups..")
+    utc = pytz.UTC
+    start_date = utc.localize(datetime.now() - timedelta(days = DAYS_TO_FILTER))
+    end_date = utc.localize(datetime.now())
     for user in scrape_participants:
         if user.username is not None and not user.bot:  # if has a username and not a bot
             if not user.deleted:  # if it isn't a deleted account
-                if hasattr(user.status, 'was_online') and datetime.now() - timedelta(days = DAYS_TO_FILTER) < user.status.was_online < datetime.now():
+                if hasattr(user.status, 'was_online') and start_date <= user.status.was_online <= end_date:
                     filtered_participants.append(user)
                 elif type(user.status) == UserStatusOnline or type(user.status) == UserStatusRecently:
                     filtered_participants.append(user)
