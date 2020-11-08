@@ -17,8 +17,16 @@ if option:
     print(Fore.BLUE + "\033[1m" + "\nSim cards are in the target group! starting FinalScraper...")
 
 # Final Scraper #
-cards, participants, TARGET_ID = Init()
+flag = True
 i, fe_count, ban_count = 0, 0, 0
+while flag:
+    try:
+        cards, participants, TARGET_ID = Init()
+        flag = False
+    except MultiError:
+        print("Initial Multi Error! Trying again in 20 seconds..")
+        time.sleep(20)
+        del cards, participants, TARGET_ID
 
 for j in range(60):
     for sim in cards:

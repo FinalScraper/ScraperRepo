@@ -11,9 +11,9 @@ import pytz
 import os
 
 # initial variables
-PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group1.py')
-scrape_link = 't.me/weedham0'
-target_link = 't.me/davig12'
+PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group2.py')
+scrape_link = 't.me/davig12'
+target_link = 't.me/panter12g'
 DAYS_TO_FILTER = 7
 TOTAL_SLEEP_TIME = 10
 
