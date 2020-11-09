@@ -10,7 +10,7 @@ from telethon.tl.types import PeerChannel
 from telethon.errors.common import MultiError
 from Header import Init, DeleteRow, isFull, JoinGroup, LeaveGroup, TOTAL_SLEEP_TIME
 
-option = int(input("Add cards to target group? (1/0): "))
+option = int(input("Add cards to target group?(if already in group type 0) (1/0): "))
 if option:
     JoinGroup()
     time.sleep(10)
