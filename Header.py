@@ -12,7 +12,7 @@ import os
 
 # initial variables
 PATH = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop\\4.0\\Group2.py')
-scrape_link = 't.me/davig12'
+scrape_link = 't.me/hot169'
 target_link = 't.me/panter12g'
 DAYS_TO_FILTER = 7
 TOTAL_SLEEP_TIME = 10
@@ -145,7 +145,7 @@ def Init():
     sim_cards = CreateSimList()
 
     main_phone = sim_cards[0]
-    print(f"Connecting to main phone: {main_phone.name}")
+    # print(f"Connecting to main phone: {main_phone.name}")
     first_client = TelegramClient(main_phone.phone, main_phone.ID, main_phone.access_hash)
     first_client.connect()
 

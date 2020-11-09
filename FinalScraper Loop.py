@@ -10,7 +10,9 @@ from telethon.tl.types import PeerChannel
 from telethon.errors.common import MultiError
 from Header import Init, DeleteRow, isFull, JoinGroup, LeaveGroup, TOTAL_SLEEP_TIME
 
-option = int(input("Add cards to target group?(if already in group type 0) (1/0): "))
+print("WELCOME TO FINAL SCRAPER!\n\n")
+print("Add cards to target group? (if already in group type 0)")
+option = int(input("Enter option (1/0): "))
 if option:
     JoinGroup()
     time.sleep(10)
@@ -31,7 +33,7 @@ while flag:
 for j in range(60):
     for sim in cards:
         if len(cards) < 10:
-            print("NOT ENOUGH SIM CARDS! EXITING..")
+            print(Fore.RED + "NOT ENOUGH SIM CARDS! EXITING..")
             exit(1)
         try:
             client = TelegramClient(sim.phone, sim.ID, sim.name)
@@ -107,7 +109,8 @@ for j in range(60):
                 break
 
             except IndexError:
-                print("GROUP IS EMPTY! EXITING")
+                print(Fore.BLUE + "GROUP IS EMPTY! ENTER NEW LINK!\nEXITING..")
+                client.disconnect()
                 exit(1)
 
             except Exception:
