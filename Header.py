@@ -16,6 +16,7 @@ scrape_link = 't.me/davig12'
 target_link = 't.me/panter12g'
 DAYS_TO_FILTER = 7
 TOTAL_SLEEP_TIME = 10
+MAX_USERS_IN_GROUP = 5300
 
 
 class Sim:
@@ -51,7 +52,7 @@ def CloseSimList(cards: list):  # writes a list of sim objects to file
 
 
 def isFull(c, group):
-    return c(GetFullChannelRequest(group)).full_chat.participants_count >= 5300
+    return c(GetFullChannelRequest(group)).full_chat.participants_count >= MAX_USERS_IN_GROUP
 
 
 def DeleteRow(phone: str):
@@ -155,15 +156,15 @@ def Init():
     target_id = target_group_entity.id
 
     print("Scraping group lists..")
-    scrape_participants = first_client.get_participants(scrape_group, aggressive = True)
-    target_participants = first_client.get_participants(target_group_entity, aggressive = True)
+    scrape_participants = first_client.get_participants(scrape_group, aggressive=True)
+    target_participants = first_client.get_participants(target_group_entity, aggressive=True)
 
     filtered_participants = []
     final_participants = []
 
     print("Filtering From Groups..")
     utc = pytz.UTC
-    start_date = utc.localize(datetime.now() - timedelta(days = DAYS_TO_FILTER))
+    start_date = utc.localize(datetime.now() - timedelta(days=DAYS_TO_FILTER))
     end_date = utc.localize(datetime.now())
     for user in scrape_participants:
         if user.username is not None and not user.bot:  # if has a username and not a bot
